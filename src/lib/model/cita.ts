@@ -26,10 +26,10 @@ export async function createCita(cita: Omit<Cita, 'id' | 'created_at'>): Promise
   return rows[0];
 }
 
-export async function getCitaById(id: number): Promise<Cita | null> {
-  const query = `SELECT id, date, hour, motive, patient_id, doctor_id, status, created_at FROM citas WHERE id = $1`;
+export async function getCitaById(id: number): Promise<Cita[] | null> {
+  const query = `SELECT id, date, hour, motive, patient_id, doctor_id, status, created_at FROM citas WHERE patient_id = $1`;
   const { rows } = await pool.query(query, [id]);
-  return rows.length ? rows[0] : null;
+  return rows;
 }
 
 export async function getAllCitas(): Promise<Cita[]> {
